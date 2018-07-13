@@ -1,0 +1,42 @@
+apply plugin: 'groovy'
+apply plugin: 'maven-publish'
+apply plugin: 'maven'
+apply plugin: 'java'
+
+
+repositories {
+    mavenCentral()
+    maven { url "http://localhost:8081/nexus/content/repositories/za_mobile_share_platform/" }
+}
+
+dependencies {
+    //gradle sdk
+    compile gradleApi()
+    //groovy sdk
+    compile localGroovy()
+    compile 'com.android.tools.build:gradle:3.0.0'
+    compile 'org.ow2.asm:asm:5.0.3'
+    compile 'org.ow2.asm:asm-commons:5.0.3'
+}
+
+def MAVEN_LOCAL_PATH = 'http://localhost:8081/nexus/content/repositories/za_mobile_share_platform/'
+def VERSION_NAME = '1.0.3-SNAPSHOT'
+def GROUP_ID = 'com.carl.mobile'
+def ARTIFACT_ID = 'ASMplugin'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            //提交到远程服务器：
+             repository(url: MAVEN_LOCAL_PATH) {
+                authentication(userName: "admin", password: "admin123")
+             }
+            pom.project {
+                groupId GROUP_ID
+                artifactId ARTIFACT_ID
+                version VERSION_NAME
+                packaging 'aar'
+            }
+        }
+    }
+}
