@@ -56,8 +56,6 @@ class MyTransform extends Transform {
                         File dest = transformInvocation.getOutputProvider().getContentLocation(destName + "_" + hexName, jarInput.contentTypes, jarInput.scopes, Format.JAR)
                         Logger.info("||-->开始遍历特定jar ${dest.absolutePath}")
 
-                        //TODO 修改jar中文件
-
                         def modifiedJar = modifyJarFile(jarInput.file, transformInvocation.context.getTemporaryDir())
                         Logger.info("||-->结束遍历特定jar ${dest.absolutePath}")
                         if (modifiedJar == null) {
