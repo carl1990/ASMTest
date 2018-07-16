@@ -20,17 +20,17 @@ public class TrackHelper {
     public static void onClick(View view) {
         String path = TrackUtil.getPath(view);
         String activityName = TrackUtil.getActivityName(view);
-        path = activityName + ":onClick:" + path;
+        path = activityName + ":::::onClick:::::" + path;
         Log.d(TAG, path);
     }
 
     public static void onActivityResume(Activity activity) {
-        Log.d(TAG, "onActivityResume" + activity.getClass().getSimpleName());
+        Log.d(TAG, "onActivityResume()  in ::::" + activity.getClass().getCanonicalName());
     }
 
 
     public static void onActivityPause(Activity activity) {
-        Log.d(TAG, "onActivityPause" + activity.getClass().getSimpleName());
+        Log.d(TAG, "onActivityPause()  in :::  " + activity.getClass().getCanonicalName());
     }
 
 

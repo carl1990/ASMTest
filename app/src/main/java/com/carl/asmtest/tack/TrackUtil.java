@@ -5,7 +5,7 @@ import android.app.ActivityManager;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
+//import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -30,9 +30,10 @@ public class TrackUtil {
             int id = childView.getId();
             index = ((ViewGroup) childView.getParent()).indexOfChild(childView);
             // 根据从属于不同的类进行index判断
-            if (childView.getParent() instanceof RecyclerView) {
-                index = ((RecyclerView) childView.getParent()).getChildAdapterPosition(childView);
-            } else if (childView.getParent() instanceof AdapterView) {
+//            if (childView.getParent() instanceof RecyclerView) {
+//                index = ((RecyclerView) childView.getParent()).getChildAdapterPosition(childView);
+//            } else
+                if (childView.getParent() instanceof AdapterView) {
                 index = ((AdapterView) childView.getParent()).getPositionForView(childView);
             } else if (childView.getParent() instanceof ViewPager) {
                 index = ((ViewPager) childView.getParent()).getCurrentItem();

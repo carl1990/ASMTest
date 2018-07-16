@@ -19,14 +19,16 @@ public class ASMUtil {
      * @param interfaces 类的实现接口
      */
     public static boolean isMatchingClass(String className, String[] interfaces) {
-        boolean isMeetClassCondition = false;
+        boolean isMeetClassCondition = isMatchingInterfaces(interfaces, "android/view/View$OnClickListener");
         //剔除掉以android开头的类，即系统类，以避免出现不可预测的bug
         if (className.startsWith("android")) {
-            return isMeetClassCondition;
+            return false;
         }
         // 是否满足实现的接口
-        isMeetClassCondition = isMatchingInterfaces(interfaces, "android/view/View$OnClickListener");
-        if (className.contains("Fragment")) {
+        if (isMeetClassCondition || className.contains("Fragment")) {
+            isMeetClassCondition = true;
+        }
+        if (isMeetClassCondition || className.contains("Activity")) {
             isMeetClassCondition = true;
         }
         return isMeetClassCondition;
@@ -91,7 +93,8 @@ public class ASMUtil {
                                           MethodVisitor methodVisitor, int access, String name, String desc) {
         MethodVisitor adapter = null;
 
-        if (name == "onClick" && isMatchingInterfaces(interfaces, "android/view/View$OnClickListener")) {
+        if (name.equals("onClick") && isMatchingInterfaces(interfaces, "android/view/View$OnClickListener")) {
+            System.out.println("||* visitMethod * onClick");
             adapter = new CarlMethodVisitor(methodVisitor, access, name, desc) {
                 @Override
                 protected void onMethodEnter() {
@@ -103,8 +106,10 @@ public class ASMUtil {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "com/carl/asmtest/tack/TrackHelper", "onClick", "(Landroid/view/View;)V", false);
                 }
             };
-        } else if (name == "onResume") {
+        } else if (name.equals("onResume")) {
+            System.out.println("||* visitMethod * onResume");
             if (className.contains("Fragment") && superName.contains("Fragment")) {
+                System.out.println("||* visitMethod * onResume in Fragment");
                 adapter = new CarlMethodVisitor(methodVisitor, access, name, desc) {
                     @Override
                     protected void onMethodExit(int opcode) {
@@ -116,6 +121,7 @@ public class ASMUtil {
                     }
                 };
             } else if (className.contains("Activity") && superName.contains("Activity")) {
+                System.out.println("||* visitMethod * onResume in Activity");
                 adapter = new CarlMethodVisitor(methodVisitor, access, name, desc) {
                     @Override
                     protected void onMethodExit(int opcode) {
@@ -128,8 +134,10 @@ public class ASMUtil {
                 };
             }
 
-        } else if (name == "onPause" && className.contains("Fragment")) {
+        } else if (name.equals("onPause")) {
+            System.out.println("||* visitMethod * onPause");
             if (className.contains("Fragment") && superName.contains("Fragment")) {
+                System.out.println("||* visitMethod * onPause in Fragment");
                 adapter = new CarlMethodVisitor(methodVisitor, access, name, desc) {
                     @Override
                     protected void onMethodExit(int opcode) {
@@ -141,6 +149,7 @@ public class ASMUtil {
                     }
                 };
             } else if (className.contains("Activity") && superName.contains("Activity")) {
+                System.out.println("||* visitMethod * onPause in Activity");
                 adapter = new CarlMethodVisitor(methodVisitor, access, name, desc) {
                     @Override
                     protected void onMethodExit(int opcode) {
@@ -152,7 +161,7 @@ public class ASMUtil {
                     }
                 };
             }
-        } else if (name == "setUserVisibleHint" && className.contains("Fragment")) {
+        } else if (name.equals("setUserVisibleHint") && className.contains("Fragment")) {
             adapter = new CarlMethodVisitor(methodVisitor, access, name, desc) {
                 @Override
                 protected void onMethodExit(int opcode) {
@@ -165,7 +174,7 @@ public class ASMUtil {
                     methodVisitor.visitMethodInsn(INVOKESTATIC, "com/carl/asmtest/tack/TrackHelper", "setFragmentUserVisibleHint", "(Landroid/support/v4/app/Fragment;Z)V", false);
                 }
             };
-        } else if (name == "onHiddenChanged" && className.contains("Fragment")) {
+        } else if (name.equals("onHiddenChanged") && className.contains("Fragment")) {
             adapter = new CarlMethodVisitor(methodVisitor, access, name, desc) {
                 @Override
                 protected void onMethodExit(int opcode) {

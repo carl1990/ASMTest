@@ -11,7 +11,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0'
-        classpath 'com.carl.mobile:ASMplugin:1.0.3-SNAPSHOT'
+        classpath 'com.carl.mobile:ASMplugin:1.0.8-SNAPSHOT'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

@@ -20,7 +20,7 @@ dependencies {
 }
 
 def MAVEN_LOCAL_PATH = 'http://localhost:8081/nexus/content/repositories/za_mobile_share_platform/'
-def VERSION_NAME = '1.0.3-SNAPSHOT'
+def VERSION_NAME = '1.0.8-SNAPSHOT'
 def GROUP_ID = 'com.carl.mobile'
 def ARTIFACT_ID = 'ASMplugin'
 

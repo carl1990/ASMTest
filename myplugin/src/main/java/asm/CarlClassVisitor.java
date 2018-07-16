@@ -68,16 +68,15 @@ public class CarlClassVisitor extends ClassVisitor {
 
         if ((isHintClass && ASMUtil.isMatchingMethod(name, desc))) {
             //指定方法名，根据满足的类条件和方法名
-            System.out.println("||-----------------开始修改方法${name}--------------------------");
-            System.out.println("||* visitMethod *");
+            System.out.println("||-----------------开始修改方法:" + name + "--------------------------");
             try {
-                adapter = ASMUtil.getMethodVisitor(mInterfaces, mClassName,superName, methodVisitor, access, name, desc);
+                adapter = ASMUtil.getMethodVisitor(mInterfaces, mClassName, superName, methodVisitor, access, name, desc);
             } catch (Exception e) {
                 e.printStackTrace();
                 adapter = null;
             }
         } else {
-            System.out.println("||---------------------查看修改后方法${name}-----------------------------");
+            System.out.println("||---------------------查看修改后方法:" + name + "-----------------------------");
             adapter = new CarlMethodVisitor(methodVisitor, access, name, desc);
         }
         if (adapter != null) {
