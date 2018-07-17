@@ -114,9 +114,9 @@ public class ASMUtil {
                     @Override
                     protected void onMethodExit(int opcode) {
                         super.onMethodExit(opcode);
-                        // ALOAD
+                        // ALOAD 获取类对象本身
                         methodVisitor.visitVarInsn(ALOAD, 0);
-                        // INVOKESTATIC INVOKESTATIC
+                        // INVOKESTATIC INVOKESTATIC  静态调用该方法
                         methodVisitor.visitMethodInsn(INVOKESTATIC, "com/carl/asmtest/tack/TrackHelper", "onFragmentResume", "(Landroid/support/v4/app/Fragment;)V", false);
                     }
                 };
