@@ -17,7 +17,7 @@
 ![Mou icon](./resources/2.png)
 
 在代码中`Transform`是一个虚类
-	
+```java
 	public abstract class Transform {
     	public Transform() {
     	}
@@ -73,6 +73,7 @@
         	return false;
     	}
 	}
+```
 看到函数`transform`,我们还没有具体实现这个函数，这个函数就是具体如何处理输入和输出。`getScopes`函数定义了输入范围可以是整个项目所有类，也可以是自己项目中的类。
 
 
@@ -375,5 +376,4 @@ PS:由于会遍历类和对类进行操作，这样做的后果之一就是会�
 
 
 好了，到这里我们就完成了借助Gradel transform 和 ASM 实现了android平台在编译期间修改Class的方式实现AOP编程，希望你能都利用它完成更多有意思的事情。
-
 
