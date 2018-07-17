@@ -195,6 +195,8 @@ ASM的处理过程也是一个典型的生产者和消费者模式，这点比�
 1. 读取相应的类文件
 在上面Transform章节中我们通过遍历相应的class文件，然后对其进行读取转换为字节流
 
+```java
+
 	    private static File modifyClassFile(File dir, File classFile, File tempDir) {
         File modified = null
         try {
@@ -216,7 +218,11 @@ ASM的处理过程也是一个典型的生产者和消费者模式，这点比�
         return modified
     	}
     	
+```
+    	
 2.使用ASM相应的类来处理该类的字节流文件
+
+```java
 
 	  static byte[] modifyClass(byte[] srcByteCode) {
         ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
@@ -225,6 +231,7 @@ ASM的处理过程也是一个典型的生产者和消费者模式，这点比�
         classReader.accept(classVisitor, ClassReader.EXPAND_FRAMES);
         return classWriter.toByteArray();
     }
+```
     
  ClassWriter有`COMPUTE_MAXS：`让系统自动为我们计算栈和本地变量的大小 和`COMPUTE_FRAMES：`指定系统自动为我们计算栈帧的大小 两个模式。
   
@@ -242,6 +249,8 @@ EXPAND_FRAMES 不再压缩frames
 ![Mou icon](./resources/6.jpg)
 
 我的实现中主要处理了visitMethod()方法
+
+```java
 
 	@Override
     public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
@@ -266,10 +275,13 @@ EXPAND_FRAMES 不再压缩frames
         }
         return methodVisitor;
     }
+ ```
     
  其中首先过滤相应的类和方法：
  
  过滤类
+ 
+ ```java
  
  		public static boolean isMatchingClass(String className, String[] interfaces) {
         boolean isMeetClassCondition = isMatchingInterfaces(interfaces, "android/view/View$OnClickListener");
@@ -286,11 +298,11 @@ EXPAND_FRAMES 不再压缩frames
         }
         return isMeetClassCondition;
     }
-    
+``` 
     
     
   过滤方法
-  
+  ```java
     static boolean isMatchingMethod(String name, String desc) {
         if ((name.equals("onClick") && desc.equals("(Landroid/view/View;)V"))
             || (name.equals("onResume") && desc.equals("()V"))
@@ -303,7 +315,7 @@ EXPAND_FRAMES 不再压缩frames
             return false;
         }
     }
-    
+ ```
     
 然后对方法进行修改，修改的地方AMS提供了一个`AdviceAdapter`类，其提供的方法有：
 ![Mou icon](./resources/7.jpg)
@@ -363,3 +375,5 @@ PS:由于会遍历类和对类进行操作，这样做的后果之一就是会�
 
 
 好了，到这里我们就完成了借助Gradel transform 和 ASM 实现了android平台在编译期间修改Class的方式实现AOP编程，希望你能都利用它完成更多有意思的事情。
+
+
