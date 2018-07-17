@@ -17,7 +17,7 @@
 ![Mou icon](./resources/2.png)
 
 在代码中`Transform`是一个虚类
-	
+```java
 	public abstract class Transform {
     	public Transform() {
     	}
@@ -73,6 +73,7 @@
         	return false;
     	}
 	}
+```
 看到函数`transform`,我们还没有具体实现这个函数，这个函数就是具体如何处理输入和输出。`getScopes`函数定义了输入范围可以是整个项目所有类，也可以是自己项目中的类。
 
 
