@@ -5,13 +5,13 @@ buildscript {
     repositories {
         google()
         jcenter()
-        maven {//本地Maven仓库地址
-            url "http://localhost:8081/nexus/content/repositories/za_mobile_share_platform/"
+        flatDir {
+            dirs './repo/'
         }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0'
-        classpath 'com.carl.mobile:ASMplugin:1.0.8-SNAPSHOT'
+        classpath 'com.carl.mobile:myplugin:1.0.8-SNAPSHOT'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -22,8 +22,8 @@ allprojects {
     repositories {
         google()
         jcenter()
-        maven {//本地Maven仓库地址
-            url "http://localhost:8081/nexus/content/repositories/za_mobile_share_platform/"
+        flatDir {
+            dirs './repo/'
         }
     }
 }

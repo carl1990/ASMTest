@@ -1,9 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'myPlugin'
 
-//carl {
-//    debugOn true
-//}
+carl {
+    debugOn true
+}
 
 android {
     compileSdkVersion 27

@@ -19,24 +19,15 @@ dependencies {
     compile 'org.ow2.asm:asm-commons:5.0.3'
 }
 
-def MAVEN_LOCAL_PATH = 'http://localhost:8081/nexus/content/repositories/za_mobile_share_platform/'
-def VERSION_NAME = '1.0.8-SNAPSHOT'
-def GROUP_ID = 'com.carl.mobile'
 def ARTIFACT_ID = 'ASMplugin'
+
+group = 'com.carl.mobile'
+version = "1.0.8-SNAPSHOT"
 
 uploadArchives {
     repositories {
-        mavenDeployer {
-            //提交到远程服务器：
-             repository(url: MAVEN_LOCAL_PATH) {
-                authentication(userName: "admin", password: "admin123")
-             }
-            pom.project {
-                groupId GROUP_ID
-                artifactId ARTIFACT_ID
-                version VERSION_NAME
-                packaging 'aar'
-            }
+        flatDir {
+            dirs '../repo/'
         }
     }
 }
